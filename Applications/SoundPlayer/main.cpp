@@ -20,7 +20,9 @@ int main(int argc, char** argv)
     GApplication app(argc, argv);
 
     String path = argv[1];
-    AWavLoader loader(path);
+    auto file = CFile::construct(path);
+
+    AWavLoader loader(file);
 
     if (loader.has_error()) {
         fprintf(stderr, "Failed to load WAV file: %s (%s)\n", path.characters(), loader.error_string());
@@ -31,7 +33,7 @@ int main(int argc, char** argv)
     audio_client->handshake();
 
     auto window = GWindow::construct();
-    window->set_title("SoundPlayer");
+    window->set_title(String::format("SoundPlayer - %s", file->filename().characters()));
     window->set_rect(300, 300, 300, 200);
 
     auto widget = GWidget::construct();
