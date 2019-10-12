@@ -9,4 +9,7 @@ endpoint AudioServer
 
     // Buffer playback
     EnqueueBuffer(i32 buffer_id) => (bool success)
+
+    SetPaused(bool is_paused) => (bool success)
+    IsPaused() => (bool is_paused)
 }

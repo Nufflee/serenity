@@ -41,12 +41,16 @@ public:
         m_position = 0;
     }
 
+    bool is_paused() const { return m_is_paused; }
+    void set_paused(bool paused) { m_is_paused = paused; }
+
 private:
     RefPtr<ABuffer> m_current;
     Queue<NonnullRefPtr<ABuffer>> m_queue;
     int m_position { 0 };
     int m_playing_queued_buffer_id { -1 };
     WeakPtr<ASClientConnection> m_client;
+    bool m_is_paused { false };
 };
 
 class ASMixer : public CObject {

@@ -14,6 +14,10 @@ public:
     void enqueue(const ABuffer&);
     bool try_enqueue(const ABuffer&);
 
+    void play();
+    void pause();
+    bool is_paused();
+
     int get_main_mix_volume();
     void set_main_mix_volume(int);
 };

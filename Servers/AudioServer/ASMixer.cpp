@@ -57,6 +57,9 @@ void ASMixer::mix()
                 continue;
             }
 
+            if (queue->is_paused())
+                continue;
+
             for (int i = 0; i < mixed_buffer_length; ++i) {
                 auto& mixed_sample = mixed_buffer[i];
                 ASample sample;

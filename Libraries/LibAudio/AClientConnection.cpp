@@ -32,6 +32,22 @@ bool AClientConnection::try_enqueue(const ABuffer& buffer)
     return response->success();
 }
 
+void AClientConnection::play()
+{
+    send_sync<AudioServer::SetPaused>(false);
+}
+
+void AClientConnection::pause()
+{
+    send_sync<AudioServer::SetPaused>(true);
+}
+
+bool AClientConnection::is_paused()
+{
+    auto response = send_sync<AudioServer::IsPaused>();
+    return response->is_paused();
+}
+
 int AClientConnection::get_main_mix_volume()
 {
     return send_sync<AudioServer::GetMainMixVolume>()->volume();

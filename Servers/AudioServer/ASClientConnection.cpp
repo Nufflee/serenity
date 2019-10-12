@@ -71,3 +71,21 @@ OwnPtr<AudioServer::EnqueueBufferResponse> ASClientConnection::handle(const Audi
     m_queue->enqueue(ABuffer::create_with_shared_buffer(*shared_buffer));
     return make<AudioServer::EnqueueBufferResponse>(true);
 }
+
+OwnPtr<AudioServer::SetPausedResponse> ASClientConnection::handle(const AudioServer::SetPaused& message)
+{
+    if (!m_queue)
+        return make<AudioServer::SetPausedResponse>(false);
+
+    m_queue->set_paused(message.is_paused());
+
+    return make<AudioServer::SetPausedResponse>(true);
+}
+
+OwnPtr<AudioServer::IsPausedResponse> ASClientConnection::handle(const AudioServer::IsPaused &)
+{
+    if (!m_queue)
+        return make<AudioServer::IsPausedResponse>(false);
+
+    return make<AudioServer::IsPausedResponse>(m_queue->is_paused());
+}
