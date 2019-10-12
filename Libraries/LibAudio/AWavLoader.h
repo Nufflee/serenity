@@ -15,6 +15,7 @@ class ByteBuffer;
 class AWavLoader {
 public:
     explicit AWavLoader(const StringView& path);
+    explicit AWavLoader(const CFile&);
 
     bool has_error() const { return !m_error_string.is_null(); }
     const char* error_string() { return m_error_string.characters(); }

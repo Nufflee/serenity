@@ -6,7 +6,12 @@
 #include <limits>
 
 AWavLoader::AWavLoader(const StringView& path)
-    : m_file(CFile::construct(path))
+{
+    AWavLoader(CFile::construct(path));
+}
+
+AWavLoader::AWavLoader(const CFile& file)
+    : m_file(file)
 {
     if (!m_file->open(CIODevice::ReadOnly)) {
         m_error_string = String::format("Can't open file: %s", m_file->error_string());
