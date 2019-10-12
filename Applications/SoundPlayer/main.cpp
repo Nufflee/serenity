@@ -45,16 +45,31 @@ int main(int argc, char** argv)
 
     auto sample_widget = SampleWidget::construct(widget);
 
-    auto button = GButton::construct("Quit", widget);
-    button->set_size_policy(SizePolicy::Fill, SizePolicy::Fixed);
-    button->set_preferred_size(0, 20);
-    button->on_click = [&](auto&) {
-        app.quit();
+    bool is_paused = false;
+
+    auto play_pause_button = GButton::construct("Pause", widget);
+    play_pause_button->set_preferred_size(5, 5);
+    play_pause_button->on_click = [&](GButton& button) {
+        is_paused = !is_paused;
+
+        sample_widget->set_paused(is_paused);
+
+        if (is_paused) {
+            audio_client->pause();
+            button.set_text("Play");
+        }
+        else {
+            audio_client->play();
+            button.set_text("Pause");
+        }
     };
 
     auto next_sample_buffer = loader.get_more_samples();
 
     auto timer = CTimer::construct(100, [&] {
+        if (audio_client->is_paused())
+            return;
+
         if (!next_sample_buffer) {
             sample_widget->set_buffer(nullptr);
             return;

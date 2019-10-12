@@ -16,6 +16,9 @@ SampleWidget::~SampleWidget()
 
 void SampleWidget::paint_event(GPaintEvent& event)
 {
+    if (m_paused)
+        return;
+
     GFrame::paint_event(event);
     GPainter painter(*this);
     painter.add_clip_rect(event.rect());
