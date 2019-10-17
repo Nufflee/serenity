@@ -277,6 +277,8 @@ void KeyboardDevice::key_state_changed(u8 raw, bool pressed)
     event.key = key;
     event.character = static_cast<u8>(character);
     event.flags = m_modifiers;
+    event.just_pressed = just_pressed;
+    event.just_released = just_released;
     if (pressed)
         event.flags |= Is_Press;
     if (m_client)
